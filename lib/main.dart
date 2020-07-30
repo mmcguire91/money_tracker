@@ -50,8 +50,31 @@ class Home extends StatelessWidget {
             ),
             Column(
               children: transactions.map((tx) {
-                return Card(
-                  child: Text(tx.title),
+                return Container(
+                  margin: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(0.5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red, width: 2.0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15.0),
+                    ),
+                  ),
+                  child: Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          child: Text(tx.amount.toString()),
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(tx.title),
+                            Text(tx.dateTime.toString())
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               }).toList(),
             )
