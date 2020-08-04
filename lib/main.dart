@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(Home());
@@ -37,6 +38,7 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
               width: double.infinity,
@@ -51,7 +53,7 @@ class Home extends StatelessWidget {
             Column(
               children: transactions.map((tx) {
                 return Container(
-                  margin: EdgeInsets.all(15.0),
+                  margin: EdgeInsets.all(5.0),
                   padding: EdgeInsets.all(0.5),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.red, width: 2.0),
@@ -64,12 +66,26 @@ class Home extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Container(
-                          child: Text(tx.amount.toString()),
+                          child: Text(
+                            '\$${tx.amount}',
+//                            .toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
+                          ),
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(tx.title),
-                            Text(tx.dateTime.toString())
+                            Text(tx.title,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0)),
+                            Text(
+                              DateFormat().format(tx.dateTime),
+                              style: TextStyle(color: Colors.grey),
+                            )
                           ],
                         ),
                       ],
