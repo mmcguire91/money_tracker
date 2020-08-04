@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'models/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -22,17 +23,21 @@ class Home extends StatelessWidget {
       dateTime: DateTime.now(),
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
+        appBar: GradientAppBar(
           centerTitle: true,
+          gradient: LinearGradient(
+            colors: [Colors.green, Color(0xff01655e)],
+          ),
           title: Text(
             'Money Tracker',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Color(0xff01655e),
+//          backgroundColorStart: Color(0xff01655e),
           actions: <Widget>[
             Icon(Icons.add),
           ],
