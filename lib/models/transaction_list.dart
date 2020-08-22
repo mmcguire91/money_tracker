@@ -3,10 +3,13 @@ import 'transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
+  TransactionList(List<Transaction> userTransactions, {this.transactions});
+  final List<Transaction> transactions;
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: _userTransactions.map((tx) {
+      children: transactions.map((tx) {
         return Container(
           margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
           padding: EdgeInsets.all(0.5),

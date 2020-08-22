@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:money_tracker/Widgets/new_transaction.dart';
-import 'models/transaction_list.dart';
+import 'package:money_tracker/Widgets/user_transactions.dart';
 
 void main() {
   runApp(Home());
@@ -40,8 +39,7 @@ class Home extends StatelessWidget {
                 elevation: 5.0,
               ),
             ),
-            NewTransaction(),
-            TransactionList(),
+            UserTransactions(),
           ],
         ),
       ),
