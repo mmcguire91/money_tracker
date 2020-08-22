@@ -5,7 +5,7 @@ class NewTransaction extends StatelessWidget {
   final title = TextEditingController();
   final amount = TextEditingController();
 
-  NewTransaction(addNewTransaction, {this.addTx});
+  NewTransaction(this.addTx);
   @override
   Widget build(BuildContext context) {
     return Card(
