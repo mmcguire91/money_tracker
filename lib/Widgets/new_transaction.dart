@@ -20,6 +20,7 @@ class NewTransaction extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
+                color: Color(0xff01655e),
               ),
             ),
             TextField(

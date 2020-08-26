@@ -26,21 +26,23 @@ class Home extends StatelessWidget {
             Icon(Icons.add),
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(15.0),
-              child: Card(
-                //Card is a freestyle container
-                color: Color(0xff01655e),
-                child: Text('Chart'),
-                elevation: 5.0,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.all(15.0),
+                child: Card(
+                  //Card is a freestyle container
+                  color: Color(0xff01655e),
+                  child: Text('Chart'),
+                  elevation: 5.0,
+                ),
               ),
-            ),
-            UserTransactions(),
-          ],
+              UserTransactions(),
+            ],
+          ),
         ),
       ),
     );
