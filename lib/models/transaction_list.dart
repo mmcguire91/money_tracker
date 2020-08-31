@@ -29,7 +29,7 @@ class TransactionList extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    '\$${transactions[index].amount}',
+                    '\$${transactions[index].amount.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,

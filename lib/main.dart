@@ -44,6 +44,11 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: null,
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xff01655e),
+        ),
       ),
     );
   }
