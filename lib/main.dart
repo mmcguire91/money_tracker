@@ -70,9 +70,12 @@ class _HomeState extends State<Home> {
           ),
 //          backgroundColorStart: Color(0xff01655e),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _transactionModal(context),
+            //Use Builder widget to get new context with MaterialApp ancestor
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _transactionModal(context),
+              ),
             ),
           ],
         ),
@@ -94,10 +97,13 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _transactionModal(context),
-          child: Icon(Icons.add),
-          backgroundColor: Color(0xff01655e),
+        //Use Builder widget to get new context with MaterialApp ancestor
+        floatingActionButton: Builder(
+          builder: (context) => FloatingActionButton(
+            onPressed: () => _transactionModal(context),
+            child: Icon(Icons.add),
+            backgroundColor: Color(0xff01655e),
+          ),
         ),
       ),
     );
