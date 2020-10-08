@@ -16,18 +16,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: '1',
-      title: 'course',
-      amount: 11.99,
-      dateTime: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      title: 'milk',
-      amount: 2.87,
-      dateTime: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: '1',
+    //   title: 'course',
+    //   amount: 11.99,
+    //   dateTime: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: '2',
+    //   title: 'milk',
+    //   amount: 2.87,
+    //   dateTime: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String txTitle, double amount) {
