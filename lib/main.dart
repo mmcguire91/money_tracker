@@ -4,6 +4,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:money_tracker/Widgets/new_transaction.dart';
 import './models/transaction_list.dart';
 import './models/transaction.dart';
+import './Widgets/chart.dart';
 
 void main() {
   runApp(Home());
@@ -29,6 +30,17 @@ class _HomeState extends State<Home> {
     //   dateTime: DateTime.now(),
     // ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((transaction) {
+      return transaction.dateTime.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+  //function to run through transactions over the past 7 days
 
   void _addNewTransaction(String txTitle, double amount) {
     final newTx = Transaction(
@@ -83,16 +95,7 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(15.0),
-                child: Card(
-                  //Card is a freestyle container
-                  color: Color(0xff01655e),
-                  child: Text('Chart'),
-                  elevation: 5.0,
-                ),
-              ),
+              Chart(_recentTransactions),
               TransactionList(_userTransactions),
             ],
           ),

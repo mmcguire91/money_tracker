@@ -24,11 +24,11 @@ class Chart extends StatelessWidget {
       }
       //calculate the totalSum according to the time
 
-      print(DateFormat.E(weekDay));
+      print(DateFormat.E().format(weekDay));
       print(totalSum);
 
       return {
-        'day': DateFormat.E(weekDay),
+        'day': DateFormat.E().format(weekDay),
         'amount': totalSum,
       };
       // 'day': DateFormat.E(weekDay) = retrieve the current day of the week and store it as a string
@@ -37,6 +37,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(groupedTransactionValues);
     return Card(
       elevation: 6.0,
       margin: EdgeInsets.all(20),
