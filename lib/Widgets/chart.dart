@@ -28,7 +28,7 @@ class Chart extends StatelessWidget {
       print(totalSum);
 
       return {
-        'day': DateFormat.E().format(weekDay),
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum,
       };
       // 'day': DateFormat.E(weekDay) = retrieve the current day of the week and store it as a string
@@ -42,7 +42,9 @@ class Chart extends StatelessWidget {
       elevation: 6.0,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: [],
+        children: groupedTransactionValues.map((data) {
+          return Text('${data['day']}: ${data['amount']}');
+        }).toList(),
       ),
     );
   }
