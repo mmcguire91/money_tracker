@@ -21,6 +21,7 @@ class TransactionList extends StatelessWidget {
                     fontSize: 20.0,
                   ),
                 ),
+                SizedBox(height: 15.0),
                 Container(
                   height: 200,
                   child: Image.asset(
