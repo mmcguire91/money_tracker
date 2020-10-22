@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
           builder: (context) => FloatingActionButton(
             onPressed: () => _transactionModal(context),
             child: Icon(Icons.add),
-            backgroundColor: Colors.green,
+            backgroundColor: Color(0xff01655e),
             // Color(0xff01655e),
           ),
         ),

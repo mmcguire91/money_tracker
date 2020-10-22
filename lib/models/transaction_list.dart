@@ -45,7 +45,7 @@ class TransactionList extends StatelessWidget {
                       backgroundColor: Color(0xff01655e),
                       foregroundColor: Colors.white,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(15.0),
                         child: FittedBox(
                           child: Text(
                             '\$${transactions[index].amount.toStringAsFixed(2)}',

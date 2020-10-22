@@ -44,7 +44,7 @@ class _NewTransactionState extends State<NewTransaction> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
-                color: Color(0xff01655e),
+                color: Colors.green,
               ),
             ),
             TextField(
@@ -62,24 +62,44 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
               //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
-//              onChanged: (value) {
-//                amount = value;
-//              },
+//              onChanged: (value) => amount = value,
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: FlatButton(
-                padding: EdgeInsets.all(10.0),
-                color: Colors.green,
-                onPressed: submitData,
-                child: Text(
-                  'Add',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.fromLTRB(5.0, 8.0, 0.0, 0.0),
+              child: Row(
+                children: <Widget>[
+                  Text('Date: N/A'),
+                  FlatButton(
+                      onPressed: null,
+                      child: Text(
+                        'Select Date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Colors.green,
+                        ),
+                      ))
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                    padding: EdgeInsets.all(10.0),
+                    color: Colors.green,
+                    onPressed: submitData,
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             )
           ],
         ),
