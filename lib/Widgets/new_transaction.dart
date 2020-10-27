@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -10,13 +11,15 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final title = TextEditingController();
+  final _title = TextEditingController();
 
-  final amount = TextEditingController();
+  final _amount = TextEditingController();
 
-  void submitData() {
-    final txTitle = title.text;
-    final txAmount = double.parse(amount.text);
+  DateTime _selectedDate;
+
+  void _submitData() {
+    final txTitle = _title.text;
+    final txAmount = double.parse(_amount.text);
 
     if (txTitle.isEmpty || txAmount <= 0) {
       return;
@@ -28,6 +31,23 @@ class _NewTransactionState extends State<NewTransaction> {
     );
 
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+        // if the user did not pick a date then do nothing
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }); // then = execute a function once a future retrieves a value
   }
 
   @override
@@ -49,8 +69,8 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
-              controller: title,
-              onSubmitted: (_) => submitData(),
+              controller: _title,
+              onSubmitted: (_) => _submitData(),
               //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
 //              onChanged: (value) {
 //                title = value;
@@ -58,9 +78,9 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
-              controller: amount,
+              controller: _amount,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => _submitData(),
               //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
 //              onChanged: (value) => amount = value,
             ),
@@ -68,9 +88,13 @@ class _NewTransactionState extends State<NewTransaction> {
               padding: const EdgeInsets.fromLTRB(5.0, 8.0, 0.0, 0.0),
               child: Row(
                 children: <Widget>[
-                  Text('Date: N/A'),
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? 'Date: N/A'
+                        : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                  ),
                   FlatButton(
-                      onPressed: null,
+                      onPressed: _presentDatePicker,
                       child: Text(
                         'Select Date',
                         style: TextStyle(
@@ -89,7 +113,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: RaisedButton(
                     padding: EdgeInsets.all(10.0),
                     color: Colors.green,
-                    onPressed: submitData,
+                    onPressed: _submitData,
                     child: Text(
                       'Add',
                       style: TextStyle(
