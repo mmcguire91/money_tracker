@@ -68,6 +68,12 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((transaction) => transaction.id == id);
+    }); //delete the user transaction where the transaction id is = id of the current item
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -97,7 +103,8 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Chart(_recentTransactions),
-              TransactionList(_userTransactions),
+              TransactionList(_userTransactions,
+                  _deleteTransaction), // pass these variables over to TransactionList
             ],
           ),
         ),
