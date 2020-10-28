@@ -42,11 +42,12 @@ class _HomeState extends State<Home> {
   }
   //function to run through transactions over the past 7 days
 
-  void _addNewTransaction(String txTitle, double amount) {
+  void _addNewTransaction(
+      String txTitle, double amount, DateTime selectedDate) {
     final newTx = Transaction(
         title: txTitle,
         amount: amount,
-        dateTime: DateTime.now(),
+        dateTime: selectedDate,
         id: DateTime.now().toString());
 
     setState(() {
