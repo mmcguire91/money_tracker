@@ -7,7 +7,16 @@ import './models/transaction.dart';
 import './Widgets/chart.dart';
 
 void main() {
-  runApp(Home());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Home(),
+    );
+  }
 }
 
 class Home extends StatefulWidget {
@@ -76,46 +85,58 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: GradientAppBar(
-          centerTitle: true,
-          gradient: LinearGradient(
-            colors: [Colors.green, Color(0xff01655e)],
-          ),
-          title: Text(
-            'Money Tracker',
-            style: TextStyle(color: Colors.white),
-          ),
+    final appBar = GradientAppBar(
+      centerTitle: true,
+      gradient: LinearGradient(
+        colors: [Colors.green, Color(0xff01655e)],
+      ),
+      title: Text(
+        'Money Tracker',
+        style: TextStyle(color: Colors.white),
+      ),
 //          backgroundColorStart: Color(0xff01655e),
-          actions: <Widget>[
-            //Use Builder widget to get new context with MaterialApp ancestor
-            Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => _transactionModal(context),
-              ),
+      actions: <Widget>[
+        //Use Builder widget to get new context with MaterialApp ancestor
+        Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _transactionModal(context),
+          ),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
+              // in order to use mediq query you must move the material app up into a stateless widget
+              child: Chart(_recentTransactions),
             ),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
+              child: TransactionList(_userTransactions, _deleteTransaction),
+            ), // pass these variables over to TransactionList
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Chart(_recentTransactions),
-              TransactionList(_userTransactions,
-                  _deleteTransaction), // pass these variables over to TransactionList
-            ],
-          ),
-        ),
-        //Use Builder widget to get new context with MaterialApp ancestor
-        floatingActionButton: Builder(
-          builder: (context) => FloatingActionButton(
-            onPressed: () => _transactionModal(context),
-            child: Icon(Icons.add),
-            backgroundColor: Color(0xff01655e),
-            // Color(0xff01655e),
-          ),
+      ),
+      //Use Builder widget to get new context with MaterialApp ancestor
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => _transactionModal(context),
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xff01655e),
+          // Color(0xff01655e),
         ),
       ),
     );

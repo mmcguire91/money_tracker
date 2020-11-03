@@ -10,72 +10,68 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 450,
-      child: transactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  'No Transactions yet',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
+    return transactions.isEmpty
+        ? Column(
+            children: <Widget>[
+              Text(
+                'No Transactions yet',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-                SizedBox(height: 15.0),
-                Container(
-                  height: 200,
-                  child: Image.asset(
-                    'assets/waiting.png',
-                    fit: BoxFit.cover,
-                  ),
+              ),
+              SizedBox(height: 15.0),
+              Container(
+                height: 200,
+                child: Image.asset(
+                  'assets/waiting.png',
+                  fit: BoxFit.cover,
                 ),
-              ],
-            )
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Color(0xff01655e),
-                      foregroundColor: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: FittedBox(
-                          child: Text(
-                            '\$${transactions[index].amount.toStringAsFixed(2)}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+              ),
+            ],
+          )
+        : ListView.builder(
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 5,
+                margin: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 5,
+                ),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Color(0xff01655e),
+                    foregroundColor: Colors.white,
+                    child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: FittedBox(
+                        child: Text(
+                          '\$${transactions[index].amount.toStringAsFixed(2)}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                    title: Text(
-                      transactions[index].title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMd().format(transactions[index]
-                          .dateTime), //format to only include DAY, MONTH, YEAR
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.close),
-                      color: Colors.grey[400],
-                      onPressed: () =>
-                          deleteTransaction(transactions[index].id),
+                  ),
+                  title: Text(
+                    transactions[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ); //preconfigured widget that works well with lists
-              },
-              itemCount: transactions.length,
-            ),
-    );
+                  subtitle: Text(
+                    DateFormat.yMMMd().format(transactions[index]
+                        .dateTime), //format to only include DAY, MONTH, YEAR
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.close),
+                    color: Colors.grey[400],
+                    onPressed: () => deleteTransaction(transactions[index].id),
+                  ),
+                ),
+              ); //preconfigured widget that works well with lists
+            },
+            itemCount: transactions.length,
+          );
   }
 }
