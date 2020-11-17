@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:money_tracker/Widgets/new_transaction.dart';
 import './models/transaction_list.dart';
@@ -7,6 +8,11 @@ import './models/transaction.dart';
 import './Widgets/chart.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  //set device orientation to portait only
   runApp(MyApp());
 }
 
