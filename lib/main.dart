@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//used to import properties to set device orientation to portait only
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:money_tracker/Widgets/new_transaction.dart';
 import './models/transaction_list.dart';
@@ -8,10 +9,10 @@ import './models/transaction.dart';
 import './Widgets/chart.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
   //set device orientation to portait only
   runApp(MyApp());
 }
@@ -45,6 +46,8 @@ class _HomeState extends State<Home> {
     //   dateTime: DateTime.now(),
     // ),
   ];
+
+  bool _showChart = false; //additional logic of switch toggle in header
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((transaction) {
@@ -102,12 +105,22 @@ class _HomeState extends State<Home> {
       ),
 //          backgroundColorStart: Color(0xff01655e),
       actions: <Widget>[
-        //Use Builder widget to get new context with MaterialApp ancestor
-        Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _transactionModal(context),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Chart'),
+            //Use Builder widget to get new context with MaterialApp ancestor
+            Builder(
+              builder: (context) => Switch(
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  }),
+              //Switch toggle to show chart
+            ),
+          ],
         ),
       ],
     );
@@ -118,21 +131,36 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
-              // in order to use mediq query you must move the material app up into a stateless widget
-              child: Chart(_recentTransactions),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     Text('Chart'),
+              //     Switch(
+              //         value: _showChart,
+              //         onChanged: (value) {
+              //           setState(() {
+              //             _showChart = value;
+              //           });
+              //         }),
+              //   ],
             ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
-              child: TransactionList(_userTransactions, _deleteTransaction),
-            ), // pass these variables over to TransactionList
+            _showChart
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                    // in order to use mediq query you must move the material app up into a stateless widget
+                    child: Chart(_recentTransactions),
+                  )
+                : Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                    child:
+                        TransactionList(_userTransactions, _deleteTransaction),
+                  ), // pass these variables over to TransactionList
           ],
         ),
       ),
