@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 //used to import properties to set device orientation to portait only
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:money_tracker/Widgets/new_transaction.dart';
@@ -149,11 +149,12 @@ class _HomeState extends State<Home> {
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
-                        0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                        0.8, //calculate the height dynamically subtracting the height of the appBar and the status bar
                     // in order to use mediq query you must move the material app up into a stateless widget
                     child: Chart(_recentTransactions),
                   )
                 : Container(
+                    margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
