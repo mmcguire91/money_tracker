@@ -94,7 +94,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    //Determine if the device orientation = landscape
+
     final appBar = GradientAppBar(
+      //appBar saved as widget object
       centerTitle: true,
       gradient: LinearGradient(
         colors: [Colors.green, Color(0xff01655e)],
@@ -108,21 +113,31 @@ class _HomeState extends State<Home> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Chart'),
-            //Use Builder widget to get new context with MaterialApp ancestor
-            Builder(
-              builder: (context) => Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  }),
-              //Switch toggle to show chart
-            ),
+            // Text('Chart'),
+            // //Use Builder widget to get new context with MaterialApp ancestor
+            // Builder(
+            //   builder: (context) => Switch(
+            //       value: _showChart,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           _showChart = value;
+            //         });
+            //       }),
+            //   //Switch toggle to show chart
+            // ),
           ],
         ),
       ],
+    );
+
+    final txListWidget = Container(
+      //txListWidget saved as widget object
+      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
+      child: TransactionList(_userTransactions, _deleteTransaction),
     );
 
     return Scaffold(
@@ -131,37 +146,43 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Text('Chart'),
-              //     Switch(
-              //         value: _showChart,
-              //         onChanged: (value) {
-              //           setState(() {
-              //             _showChart = value;
-              //           });
-              //         }),
-              //   ],
-            ),
-            _showChart
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.8, //calculate the height dynamically subtracting the height of the appBar and the status bar
-                    // in order to use mediq query you must move the material app up into a stateless widget
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
-                    child:
-                        TransactionList(_userTransactions, _deleteTransaction),
-                  ), // pass these variables over to TransactionList
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Chart'),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      }),
+                ],
+              ),
+            //if device orientation is not landscape show chart and transaction list
+            if (!isLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                // in order to use mediq query you must move the material app up into a stateless widget
+                child: Chart(_recentTransactions),
+              ),
+            if (!isLandscape) txListWidget,
+            //if device orientation is landscape show chart or transaction list
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.8, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                      // in order to use mediq query you must move the material app up into a stateless widget
+                      child: Chart(_recentTransactions),
+                    )
+                  : txListWidget, // pass these variables over to TransactionList
           ],
         ),
       ),
