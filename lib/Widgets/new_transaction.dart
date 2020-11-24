@@ -57,80 +57,89 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5.0,
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.all(15.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Add New Transaction',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.green,
+    return SingleChildScrollView(
+      //make bottom modal scrollable. A better solution here would be ShowModalBottomSheet()
+      child: Card(
+        elevation: 5.0,
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(
+            left: 15.0,
+            top: 15.0,
+            right: 15.0,
+            bottom: MediaQuery.of(context).viewInsets.bottom +
+                15, //make bottom modal scrollable.
+          ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                'Add New Transaction',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.green,
+                ),
               ),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _title,
-              onSubmitted: (_) => _submitData(),
-              //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: _title,
+                onSubmitted: (_) => _submitData(),
+                //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
 //              onChanged: (value) {
 //                title = value;
 //              },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amount,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-              //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
-//              onChanged: (value) => amount = value,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 8.0, 0.0, 0.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'Date: N/A'
-                        : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
-                  ),
-                  FlatButton(
-                      onPressed: _presentDatePicker,
-                      child: Text(
-                        'Select Date',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          color: Colors.green,
-                        ),
-                      ))
-                ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(10.0),
-                    color: Colors.green,
-                    onPressed: _submitData,
-                    child: Text(
-                      'Add',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: _amount,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
+                //onSubmitted only takes string values so when passing in numbers you have to pass in an anonymous function
+//              onChanged: (value) => amount = value,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5.0, 8.0, 0.0, 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(_selectedDate == null
+                          ? 'Date: N/A'
+                          : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                    ),
+                    FlatButton(
+                        onPressed: _presentDatePicker,
+                        child: Text(
+                          'Select Date',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.green,
+                          ),
+                        ))
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      padding: EdgeInsets.all(10.0),
+                      color: Colors.green,
+                      onPressed: _submitData,
+                      child: Text(
+                        'Add',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
