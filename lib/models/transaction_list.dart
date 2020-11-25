@@ -67,11 +67,21 @@ class TransactionList extends StatelessWidget {
                     DateFormat.yMMMd().format(transactions[index]
                         .dateTime), //format to only include DAY, MONTH, YEAR
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.close),
-                    color: Colors.grey[400],
-                    onPressed: () => deleteTransaction(transactions[index].id),
-                  ),
+                  trailing: MediaQuery.of(context).size.width >
+                          460 // Display additional content based on device width
+                      ? FlatButton.icon(
+                          icon: Icon(Icons.close),
+                          label: Text('Delete'),
+                          textColor: Colors.grey[400],
+                          onPressed: () =>
+                              deleteTransaction(transactions[index].id),
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.close),
+                          color: Colors.grey[400],
+                          onPressed: () =>
+                              deleteTransaction(transactions[index].id),
+                        ),
                 ),
               ); //preconfigured widget that works well with lists
             },
