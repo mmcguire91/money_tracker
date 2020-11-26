@@ -178,7 +178,8 @@ class _HomeState extends State<Home> {
                       height: (MediaQuery.of(context).size.height -
                               appBar.preferredSize.height -
                               MediaQuery.of(context).padding.top) *
-                          0.8, //calculate the height dynamically subtracting the height of the appBar and the status bar
+                          0.8, 
+                          //calculate the height dynamically subtracting the height of the appBar and the status bar
                       // in order to use mediq query you must move the material app up into a stateless widget
                       child: Chart(_recentTransactions),
                     )
