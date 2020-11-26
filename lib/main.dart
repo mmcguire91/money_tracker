@@ -1,14 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 //used to import properties to set device orientation to portait only
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+
 import 'package:money_tracker/Widgets/new_transaction.dart';
 import './models/transaction_list.dart';
 import './models/transaction.dart';
 import './Widgets/chart.dart';
-
-//test commit with VSCode
 
 void main() {
   // SystemChrome.setPreferredOrientations([
@@ -96,6 +97,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    final mediaQuery = MediaQuery.of(context); //store mediaQuery in variable to reduce load capacity
+
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     //Determine if the device orientation = landscape
@@ -115,6 +119,8 @@ class _HomeState extends State<Home> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // Platform.isIOS ? Builder(builder: context) => IconButton.(icon: Icons.add), onPressed: () => _transactionModal(context),) : Container(),
+            // ^ does not work. trying to query if iOS platform , show add button to deploy transaction modal
             // Text('Chart'),
             // //Use Builder widget to get new context with MaterialApp ancestor
             // Builder(
@@ -135,9 +141,9 @@ class _HomeState extends State<Home> {
     final txListWidget = Container(
       //txListWidget saved as widget object
       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.7, //calculate the height dynamically subtracting the height of the appBar and the status bar
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
@@ -153,21 +159,22 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Chart'),
-                  Switch(
+                  Switch.adaptive( //.adaptive = adapt to UI component iOS or Android
                       value: _showChart,
                       onChanged: (value) {
                         setState(() {
                           _showChart = value;
                         });
-                      }),
+                      },
+                    ), //Switch toggle to show chart
                 ],
               ),
             //if device orientation is not landscape show chart and transaction list
             if (!isLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.3, //calculate the height dynamically subtracting the height of the appBar and the status bar
                 // in order to use mediq query you must move the material app up into a stateless widget
                 child: Chart(_recentTransactions),
@@ -177,9 +184,9 @@ class _HomeState extends State<Home> {
             if (isLandscape)
               _showChart
                   ? Container(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.8, 
                           //calculate the height dynamically subtracting the height of the appBar and the status bar
                       // in order to use mediq query you must move the material app up into a stateless widget
@@ -190,7 +197,8 @@ class _HomeState extends State<Home> {
         ),
       ),
       //Use Builder widget to get new context with MaterialApp ancestor
-      floatingActionButton: Builder(
+      //Platform.isOS = query if the user is running on iOS operating system, from dart:io package
+      floatingActionButton: Platform.isIOS ? Container() : Builder(
         builder: (context) => FloatingActionButton(
           onPressed: () => _transactionModal(context),
           child: Icon(Icons.add),
