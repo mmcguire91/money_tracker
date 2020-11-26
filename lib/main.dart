@@ -8,6 +8,8 @@ import './models/transaction_list.dart';
 import './models/transaction.dart';
 import './Widgets/chart.dart';
 
+//test commit with VSCode
+
 void main() {
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,
