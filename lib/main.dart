@@ -11,6 +11,8 @@ import './models/transaction_list.dart';
 import './models/transaction.dart';
 import './Widgets/chart.dart';
 
+//Platform.isOS = query if the user is running on iOS operating system, from dart:io package
+
 void main() {
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,
@@ -104,7 +106,21 @@ class _HomeState extends State<Home> {
         MediaQuery.of(context).orientation == Orientation.landscape;
     //Determine if the device orientation = landscape
 
-    final appBar = GradientAppBar(
+    final PreferredSizeWidget appBar = Platform.isIOS ? CupertinoNavigationBar(
+      //query if iOS platform , show add button to deploy transaction modal
+      middle: Text(
+          'Money Tracker',
+          ), 
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+            GestureDetector(
+                child: Icon(CupertinoIcons.add),
+                onTap: () => _transactionModal(context),
+              ),
+            ],
+          ),
+        ) : GradientAppBar(
       //appBar saved as widget object
       centerTitle: true,
       gradient: LinearGradient(
@@ -119,8 +135,6 @@ class _HomeState extends State<Home> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Platform.isIOS ? Builder(builder: context) => IconButton.(icon: Icons.add), onPressed: () => _transactionModal(context),) : Container(),
-            // ^ does not work. trying to query if iOS platform , show add button to deploy transaction modal
             // Text('Chart'),
             // //Use Builder widget to get new context with MaterialApp ancestor
             // Builder(
@@ -148,9 +162,7 @@ class _HomeState extends State<Home> {
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final pageBody = SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -195,10 +207,13 @@ class _HomeState extends State<Home> {
                   : txListWidget, // pass these variables over to TransactionList
           ],
         ),
-      ),
-      //Use Builder widget to get new context with MaterialApp ancestor
-      //Platform.isOS = query if the user is running on iOS operating system, from dart:io package
-      floatingActionButton: Platform.isIOS ? Container() : Builder(
+      );
+
+    return Platform.isIOS ? CupertinoPageScaffold(child: pageBody, navigationBar: appBar,) : Scaffold(
+      appBar: appBar,
+      body: pageBody,      
+        floatingActionButton: Platform.isIOS ? Container() : Builder(
+        //Use Builder widget to get new context with MaterialApp ancestor
         builder: (context) => FloatingActionButton(
           onPressed: () => _transactionModal(context),
           child: Icon(Icons.add),
