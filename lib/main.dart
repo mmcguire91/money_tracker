@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
 
-    final pageBody = SingleChildScrollView(
+    final pageBody = SafeArea(child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -207,7 +207,8 @@ class _HomeState extends State<Home> {
                   : txListWidget, // pass these variables over to TransactionList
           ],
         ),
-      );
+      ),
+    );
 
     return Platform.isIOS ? CupertinoPageScaffold(child: pageBody, navigationBar: appBar,) : Scaffold(
       appBar: appBar,
